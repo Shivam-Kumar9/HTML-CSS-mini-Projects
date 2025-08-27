@@ -4,24 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=!, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+            .slider{
+              width: 300px;
+              height: 200px;
+              border-radius: 1px solid;
+              display: flex;
+              overflow: hidden;
+              
+            }
+    </style>
   </head>
   <body>
     <h1>Image Slider</h1>
-    <div class="slider"></div>
-    <button class="prev">prev</button>
+        <button class="prev">prev</button>
     <button class="next">next</button>
+    <hr>
+    <button class="start" style="background-color: rgb(21, 139, 21); color: white; padding: 5px 10px; border: none;">start</button>
+    <button class="stop" style="background-color: rgb(139, 29, 21); color: white; padding: 5px 10px; border: none;">stop</button>
+
+    <div class="slider">
+     
+    </div>
+
   </body>
   <script>
     let box = document.querySelector(".slider");
     let prev = document.querySelector(".prev");
     let next = document.querySelector(".next");
+      let start = document.querySelector(".start");
+      let stop = document.querySelector(".stop");
 
     let image = [
-      "https://picsum.photos/id/236/300/200",
-      "https://picsum.photos/id/237/300/200",
-      "https://picsum.photos/id/238/300/200",
-      "https://picsum.photos/id/239/300/200",
-      "https://picsum.photos/id/240/300/200",
+      "https://picsum.photos/id/1/300/200",
+      "https://picsum.photos/id/2/300/200",
+      "https://picsum.photos/id/3/300/200",
+      "https://picsum.photos/id/4/300/200",
+      "https://picsum.photos/id/5/300/200",
     ];
+    let currentIndex = 0;
+    let intervalID 
+    function disp(){
+        box.innerHTML= `<h3>${image[currentIndex]}</h3>
+        <img src=${image[currentIndex]} alt="png">
+                         `
+    } 
+    prev.addEventListener('click', ()=>{
+        --currentIndex
+        if(currentIndex<0) {
+            currentIndex = image.length-1
+        }
+        disp()
+    } )
+    next.addEventListener('click', ()=>{
+        ++currentIndex
+        if(currentIndex>image.length-1)currentIndex=0
+        disp()
+    })
+     
+    function inloop(){
+        if (intervalID) clearInterval(intervalID)
+        intervalID =  setInterval(()=>{
+            currentIndex++
+            if(currentIndex>image.length-1) currentIndex =0
+            disp()
+        },2000)
+    }
+    start.addEventListener('click', inloop)
+    stop.addEventListener('click',()=> {if(intervalID)clearInterval(intervalID)} )
+    // inloop()
   </script>
 </html>
